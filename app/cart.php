@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\sale;
-class cart extends Model
+class Cart extends Model
 {
     protected $fillable=[
         'comment',
