@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\sale;
+
 class Cart extends Model
 {
     protected $fillable=[
