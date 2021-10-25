@@ -23,11 +23,15 @@ class Sale extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public function cart()
+    {
+        return $this->belongsTo('App\Cart');
+    }
     public static function sumSale($user_id,$cart_id=null)
     {   $sum=0;
         $sale = self::where('user_id',$user_id)->where('cart_id',$cart_id)->get();
         foreach($sale as $value){
-            $sum+=$value->amount*$value->item->price;
+            $sum+=$value->amount*($value->price ?? $value->item->price);
         }
         return $sum;
 

@@ -77,8 +77,8 @@
             <tr>
                 <td>{{$value->item->name}}</td>
                 <td>{{$value->amount}}</td>
-                <td>{{$value->item->price}}</td>
-                <td>{{$value->amount*$value->item->price}}</td>
+                <td>{{$value->item->getOriginalPrice($value->id,$id)}}</td>
+                <td>{{$value->amount*$value->item->getOriginalPrice($value->id,$id)}}</td>
                 <td><button class="{{$value->id}} button is-success js-edit-target">編集</button><button class="<?php echo $value['id'] ?> button is-danger js-delete-target">消去</button></td>
                
             </tr>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\cart\CreateCartUseCase;
+use App\UseCase\cart\CreateCartUseCase;
 use App\Cart;
 use Illuminate\Http\Request;
 use App\Sale;

@@ -54,3 +54,8 @@ console.log($("tr").length);
 if($('tr').length > 2){
     $('.js-cart-target-button').removeClass('is-hidden');
 }
+$('#logout').click(function(event){
+    console.log('hogehoge');
+    event.preventDefault();
+    $("#logout-form").submit();
+})

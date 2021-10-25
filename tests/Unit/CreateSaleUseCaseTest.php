@@ -1,13 +1,13 @@
 <?php
 namespace Tests\Unit;
-use App\UseCase\cart\CreateCartUseCase;
+use App\UseCase\sale\CreateSaleUseCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Auth;
 use App\Sale;
 use App\Item;
 use App\User;
 use Tests\TestCase;
-class CreateCartUseCaseTest extends TestCase
+class CreateSaleUseCaseTest extends TestCase
 {    
     use RefreshDatabase;
    
@@ -20,22 +20,23 @@ class CreateCartUseCaseTest extends TestCase
         Item::create(['name'=>'hoge2','caption'=>'test','user_id'=>$testUser->id,'file_name'=>'test','price'=>100]);
         $item1 = Item::latest()->get()[0];
         $item2 = Item::latest()->get()[1];
+        $useCase = new CreateSaleUseCase();
+       
         
-        Sale::create(['amount'=>1,'user_id'=>$testUser->id,'price'=>$item1->price,'item_id'=>$item1->id]);
-        Sale::create(['amount'=>2,'user_id'=>$testUser->id,'price'=>$item2->price,'item_id'=>$item2->id]);
-        $useCase = new CreateCartUseCase();
-        $useCase->handle(['comment'=>'test']);
+        $useCase->handle(['user_id'=>$testUser->id,'item_id'=>$item1->id]);
+        $useCase->handle(['user_id'=>$testUser->id,'item_id'=>$item2->id]);
+        $useCase->handle(['user_id'=>$testUser->id,'item_id'=>$item2->id]);
         Auth::logout();
 
-        $this->assertDatabaseHas('carts', [
-            'comment'=>'test',
-            'count'=>3,
-            'sum'=>500
+        $this->assertDatabaseHas('sales', [
+           'item_id'=>$item1->id,
+           'amount'=>1
         ]);
-        $this->assertDatabaseMissing('sales', [
-            'user_id'=>$testUser->id,
-            'cart_id'=>null
+        $this->assertDatabaseHas('sales', [
+            'item_id'=>$item2->id,
+           'amount'=>2
         ]);
+       
     }
 
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
-
+use App\UseCase\sale\CreateSaleUseCase;
 use Illuminate\Http\Request;
 use Auth;
 class SaleController extends Controller
@@ -18,20 +18,8 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {   
-        if(Sale::where('item_id',$request->item_id)->where('user_id',Auth::user()->id)->where('cart_id',null)->exists())
-        {
-           
-            $sale = Sale::where('item_id',$request->item_id)->where('user_id',Auth::user()->id)->where('cart_id',null)->get()[0];           
-            $sale->amount = $sale->amount+1;
-            $sale->save();
-           
-        }else{
-            Sale::create([
-                'item_id'=>$request->item_id,
-                'amount'=>1,
-                'user_id'=>Auth::user()->id
-            ]);
-        }
+       $sale = new CreateSaleUseCase();
+       $sale->handle($request->all());
   
         return redirect('/');
     }

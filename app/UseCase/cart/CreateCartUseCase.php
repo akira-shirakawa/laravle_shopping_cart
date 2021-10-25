@@ -1,6 +1,6 @@
 <?php
 
-namespace App\cart;
+namespace App\UseCase\cart;
 
 use App\Cart;
 use App\Sale;
