@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\UseCase\sale\CreateSaleUseCase;
 use Illuminate\Http\Request;
-use Auth;
+
 class SaleController extends Controller
 {
     

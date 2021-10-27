@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Item;
 use Illuminate\Http\Request;
 use App\Sale;
-use App\User;
+
 use Auth;
 use Illuminate\Support\Facades\DB;
 

@@ -16,8 +16,9 @@ class Item extends Model
     ];
     public function getOriginalPrice($item_id,$cart_id)
     {
-        $price = Sale::where('item_id',$item_id)->where('cart_id',$cart_id)->where('user_id',Auth::id())->get()[0];
+        $price = Sale::where('item_id',$item_id)->where('cart_id',$cart_id)->where('user_id',Auth::id())->first();
+        
        
-        return $price->price ?: '';
+        return $price->price ?? '';
     }
 }

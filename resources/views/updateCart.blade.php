@@ -64,7 +64,7 @@
                     <div class="card-content">
                         <p class="is-size-4">{{$value->name}}</p>
                         <p>{{$value->caption}}</p>
-                        <p class="has-text-centered has-text-danger">{{$value->getOriginalPrice($value->id,$id) ?? $value->price}}円</p>
+                        <p class="has-text-centered has-text-danger">{{$value->getOriginalPrice($value->id,$id) ?: $value->price}}円</p>
                         <button class="{{$value->id}} button is-success is-fullwidth has-text-centered js-add-target">add to cart<i class="fas fa-shopping-cart"></i></button>
                         
                     </div>
@@ -77,13 +77,13 @@
             <tr>
                 <td>{{$value->item->name}}</td>
                 <td>{{$value->amount}}</td>
-                <td>{{$value->item->getOriginalPrice($value->id,$id)}}</td>
-                <td>{{$value->amount*$value->item->getOriginalPrice($value->id,$id)}}</td>
-                <td><button class="{{$value->id}} button is-success js-edit-target">編集</button><button class="<?php echo $value['id'] ?> button is-danger js-delete-target">消去</button></td>
+                <td>{{$value->price}}</td>
+                <td>{{$value->amount*$value->price}}</td>
+                <td><button class="{{$value->id}} button is-success js-edit-target">編集</button><button class="{{$value->id}} button is-danger js-delete-target">消去</button></td>
                
             </tr>
             @endforeach
-            <tr><td></td><td></td><td>カート合計</td><td><?php echo '¥'.number_format($sum) ?></td><td></td></tr>
+            <tr><td></td><td></td><td>カート合計</td><td> {{'¥'.number_format($sum)}} </td><td></td></tr>
         </table>
     <form action="/sale" method="post" id="item">
         @csrf
