@@ -24,3 +24,4 @@ Route::post('/cart/delete','CartController@destroy');
 route::get('/cart','CartController@index');
 route::get('/cart/{id}','CartController@edit');
 route::post('/sale/update','SaleController@update');
+route::get('/search','CartController@search');

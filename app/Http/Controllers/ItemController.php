@@ -71,7 +71,7 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        $item = Item::find($id);
+        $item = Item::findOrFail($id);
         return view('updateItem',['item'=>$item]);
     }
 
