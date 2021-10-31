@@ -75,6 +75,7 @@ class CartController extends Controller
         
         
         $cart = Cart::where('comment','like',"%".$value."%")
+        ->where('user_id',Auth::id())
         ->where('created_at','>',$request->created_at_from ?? '2000-01-01' )
         ->where('created_at','<',$request->created_at_to ?? '2999-12-30')
         ->where('updated_at','>',$request->updated_at_from ?? '2000-01-01')

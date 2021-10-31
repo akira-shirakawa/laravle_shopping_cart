@@ -21,4 +21,8 @@ class Item extends Model
        
         return $price->price ?? '';
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

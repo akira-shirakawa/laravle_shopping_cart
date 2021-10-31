@@ -65,6 +65,7 @@
                         <p class="is-size-4">{{$value->name}}</p>
                         <p>{{$value->caption}}</p>
                         <p class="has-text-centered has-text-danger">{{$value->price}}円</p>
+                        <p>作成者：{{$value->user->name}}</p>
                         <button class="{{$value->id}} button is-success is-fullwidth has-text-centered js-add-target">add to cart<i class="fas fa-shopping-cart"></i></button>
                         
                     </div>

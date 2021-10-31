@@ -58,6 +58,7 @@
                     <p class="is-size-4">{{$value->name}}</p>
                     <p>{{$value->caption}}</p>
                     <p class="has-text-centered has-text-danger">{{$value->price}}円</p>
+                    <p>作成者：{{$value->user->name}}</p>
                     <a class="button is-success is-full-width has-text-centered" href="/item/edit/{{$value->id}}">edit item</a>
                     <button class="{{$value->id}} button is-danger js-delete-target"><i class="fas fa-trash-alt"></i></button>
                 </div>
