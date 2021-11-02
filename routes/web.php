@@ -25,3 +25,19 @@ route::get('/cart','CartController@index');
 route::get('/cart/{id}','CartController@edit');
 route::post('/sale/update','SaleController@update');
 route::get('/search','CartController@search');
+
+Route::group(['prefix' => 'admin'], function() {
+    
+    Route::get('login',     'Admin\LoginController@showLoginForm')->name('admin.login');
+    Route::post('login',    'Admin\LoginController@login');
+});
+ 
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
+    Route::post('logout',   'Admin\LoginController@logout')->name('admin.logout');
+    Route::get('home',      'Admin\HomeController@index')->name('admin.home');
+    Route::post('category','CategoryController@store');
+    Route::post('category/delete','CategoryController@destroy');
+    Route::get('category/{id}','CategoryController@edit');
+    Route::post('category/update','CategoryController@update');
+    Route::get('/user','Admin\HomeController@user');
+});

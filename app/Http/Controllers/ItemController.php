@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Item;
 use Illuminate\Http\Request;
 use App\Sale;
@@ -25,6 +26,7 @@ class ItemController extends Controller
         $item = Item::all();
         $sale = Sale::where('user_id',Auth::id())->where('cart_id',null)->get();
         $sum = Sale::sumSale(Auth::id());
+       
         
         return view('index',['items'=>$item,'sale'=>$sale,'sum'=>$sum]);
     }
@@ -37,7 +39,8 @@ class ItemController extends Controller
     public function create()
     {
         $item = Item::all();
-        return view('item',['item'=>$item]);
+        $category = Category::all();
+        return view('item',['item'=>$item,'categories'=>$category]);
     }
 
     /**
@@ -48,6 +51,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+       
         if($file = $request->image){
             
             $fileName = time().'.'.$file->getClientOriginalExtension();          
@@ -58,8 +62,10 @@ class ItemController extends Controller
             $fileName = 'none_image32310901.png';        
             Item::create($request->all()+['file_name'=>$fileName]);
         }
-        $item = Item::all();
-        return view('item',['item'=>$item]);
+
+        
+        
+        return back();
     }
 
 
@@ -72,7 +78,8 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::findOrFail($id);
-        return view('updateItem',['item'=>$item]);
+        $category = Category::all();
+        return view('updateItem',['item'=>$item,'categories'=>$category]);
     }
 
     /**

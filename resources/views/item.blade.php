@@ -29,6 +29,12 @@
             <p>値段</p>
             <input type="number" class="input" id="js-number1" name="price" required>
             <input type="hidden" name="user_id" value="{{auth::user()->id}}">
+            <p>カテゴリー</p>
+            <select name="category_id">
+                @foreach($categories as $value)
+                <option value="{{$value->id}}">{{$value->category}}</option>
+                @endforeach
+            </select>
             <div class="file is-boxed">
                 <label class="file-label">
                     <input class="file-input" type="file" name="image" id="file" >
@@ -59,6 +65,7 @@
                     <p>{{$value->caption}}</p>
                     <p class="has-text-centered has-text-danger">{{$value->price}}円</p>
                     <p>作成者：{{$value->user->name}}</p>
+                    <p>カテゴリー:{{$value->category->category ?? '未分類'}}</p>
                     <a class="button is-success is-full-width has-text-centered" href="/item/edit/{{$value->id}}">edit item</a>
                     <button class="{{$value->id}} button is-danger js-delete-target"><i class="fas fa-trash-alt"></i></button>
                 </div>

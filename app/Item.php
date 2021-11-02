@@ -12,7 +12,8 @@ class Item extends Model
         'caption',
         'file_name',
         'price',
-        'user_id'
+        'user_id',
+        'category_id'
     ];
     public function getOriginalPrice($item_id,$cart_id)
     {
@@ -24,5 +25,10 @@ class Item extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
     }
 }

@@ -18,6 +18,12 @@
             <input type="number" class="input" id="js-number1" name="price" value="{{$item->price}}" required>
             <input type="hidden" name="user_id" value="{{auth::user()->id}}">
             <input type="hidden" name ="item_id" value="{{$item->id}}">
+            <p>カテゴリー</p>
+            <select name="category_id">
+                @foreach($categories as $value)
+                <option value="{{$value->id}}">{{$value->category}}</option>
+                @endforeach
+            </select>
             <div class="file is-boxed">
                 <label class="file-label">
                     <input class="file-input" type="file" name="image" id="file" >
