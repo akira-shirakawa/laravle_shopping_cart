@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('navbar')
 <a class="navbar-item" href="./home">

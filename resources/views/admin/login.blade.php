@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('navbar')
 <a href="/" class="navbar-item"><i class="fas fa-home"></i></a>
