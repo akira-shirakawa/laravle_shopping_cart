@@ -102,7 +102,7 @@ class ItemController extends Controller
             Item::find($request->item_id)->update($request->all()+['file_name'=>$fileName]);
         }
         $item = Item::all();
-        return view('item',['item'=>$item]);
+        return redirect('item');
     }
 
     /**
