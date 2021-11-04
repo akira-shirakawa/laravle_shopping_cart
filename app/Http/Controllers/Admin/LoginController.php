@@ -39,7 +39,7 @@ class LoginController extends Controller
     {
          if(Auth::guard('admin')->user())
          {
-            return view('admin.home');
+            return redirect('admin/home');
          }
            return view('admin.login'); 
     }
