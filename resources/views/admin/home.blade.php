@@ -21,11 +21,13 @@
     <td>{{$value->created_at}}</td>
     <td>{{$value->categories->count()}}</td>
     <td>
+    @if($value->categories->count() == 0)
         <form action="./category/delete" method="post">
             @csrf
             <input type="hidden" value="{{$value->id}}" name="id">
             <input type="submit" value="消去" class="button is-danger">
         </form>
+    @endif
     </td>
     <td><a class="button" href="./category/{{$value->id}}">編集</td>
 </tr>

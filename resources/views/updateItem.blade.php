@@ -21,7 +21,11 @@
             <p>カテゴリー</p>
             <select name="category_id">
                 @foreach($categories as $value)
+                @if($item->category->category == $value->category)
+                <option value="{{$value->id}}" selected>{{$value->category}}</option> 
+                @else
                 <option value="{{$value->id}}">{{$value->category}}</option>
+                @endif
                 @endforeach
             </select>
             <div class="file is-boxed">
