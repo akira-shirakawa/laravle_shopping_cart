@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Sale;
 class Cart extends Model
 {
     protected $fillable=[
@@ -16,4 +16,13 @@ class Cart extends Model
     {
         return $this->hasMany('App\Sale');
     }
+
+    public function items()
+    {
+        return $this->belongsToMany('App\Item','sales');
+        
+    }
+    
+    
+    
 }

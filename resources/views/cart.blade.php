@@ -50,12 +50,21 @@
                                     <input type="number" name="count_from" class="input" value="{{session('count_from')}}">
                                         <p>集計結果(from)</p>
                                     <input type="number" name="sum_from" class="input" value="{{session('sum_from')}}">
+                                    <p>カテゴリー</p>
+                                    <select name="category_id" class="select">
+                                        <option value="" >指定なし</option>
+                                        @foreach($category as $value)
+                                        <option value="{{$value->id}}">{{$value->category}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="column">
                                     <p>集計数(to)</p>
                                         <input type="number" name="count_to" class="input" value="{{session('count_to')}}">
                                     <p>集計結果(to)</p>
                                         <input type="number" name="sum_to" class="input" value="{{session('sum_to')}}">
+                                   
+                                   
                                         <input type="submit" class="button" value="検索">
                                 </div>
                             </div>
@@ -66,9 +75,15 @@
             </div>
         </article>
 <table class="table is-fullwidth">
-    <tr><th>コメント</th><th>集計数</th><th>集計結果</th><th>作成日時</th><th>更新日時</th><th></th></tr>  
+    <tr><th>カテゴリー</th><th>コメント</th><th>集計数</th><th>集計結果</th><th>作成日時</th><th>更新日時</th><th></th></tr>  
     @foreach($carts as $value)  
     <tr>
+        <td>
+            @foreach($value->items as $item)
+            {{optional($item->category)->category}},
+            @endforeach
+            
+        </td>
         <td>{{$value->comment}}</td>
         <td>{{$value->count}}</td>
         <td>{{ '¥'.number_format($value->sum) }}</td>

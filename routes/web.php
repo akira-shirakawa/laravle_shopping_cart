@@ -23,6 +23,7 @@ Route::post('/sale/delete','SaleController@destroy');
 Route::post('/cart/delete','CartController@destroy');
 route::get('/cart','CartController@index');
 route::get('/cart/{id}','CartController@edit');
+route::post('/cart/update','CartController@update');
 route::post('/sale/update','SaleController@update');
 route::get('/search','CartController@search');
 

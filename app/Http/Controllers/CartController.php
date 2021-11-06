@@ -6,6 +6,7 @@ use App\Cart;
 use Illuminate\Http\Request;
 use App\Sale;
 use App\Item;
+use App\Category;
 use Auth;
 
 
@@ -22,7 +23,8 @@ class CartController extends Controller
     public function index()
     {
         $cart = Cart::where('user_id',Auth::id())->get();
-        return view('cart',['carts'=>$cart]);
+        $category = Category::all();
+        return view('cart',['carts'=>$cart,'category'=>$category]);
     }
 
 
@@ -55,7 +57,13 @@ class CartController extends Controller
         return view('updateCart',['items'=>$item,'cart'=>$cart,'sum'=>$sum,'id'=>$id]);
     }
 
-
+    public function update(Request $request)
+    {
+        $cart = Cart::find($request->cart_id);
+        $cart->comment = $request->comment;
+        $cart->save();
+        return redirect('/cart');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -72,7 +80,7 @@ class CartController extends Controller
     public function search(Request $request)
     {
         $value = $request->input('comment');
-        
+        $this->category =$request->category_id;
         
         $cart = Cart::where('comment','like',"%".$value."%")
         ->where('user_id',Auth::id())
@@ -84,6 +92,9 @@ class CartController extends Controller
         ->where('count','<',$request->count_to ?? 10000000)
         ->where('sum','>',$request->sum_from ?? -1)
         ->where('sum','<',$request->sum_to ?? 10000000)
+        ->whereHas('items',function($query){
+            $this->category ? $query->where('category_id',  $this->category ): $query->where('category_id','>',-1 );
+        })
         ->get();
        \Session::flash('created_at_from',$request->created_at_from);
        \Session::flash('created_at_to',$request->created_at_to);
@@ -95,6 +106,6 @@ class CartController extends Controller
        \Session::flash('sum_from',$request->sum_from);
        \Session::flash('sum_to',$request->sum_to);
         
-        return view('cart',['carts'=>$cart]);
+        return view('cart',['carts'=>$cart,'category'=>Category::all()]);
     }
 }

@@ -16,11 +16,11 @@
   <div class="modal-content">
     <div class="box">
 
-        <form action="/cart" method="post">
+        <form action="/cart/update" method="post">
         @csrf
             <p class="is-size-3">カートに登録する前にコメントを入れてください</p>
-            <input type="text" name="comment" class="input" required>
-          
+            <input type="text" name="comment" class="input" value="{{$cart->first()->cart->comment}}" required>
+            <input type="hedden" name="cart_id" value="{{$cart->first()->cart->id}}">
             <input type="submit" value="送信" class="button">
         </form>
     </div>
@@ -90,6 +90,7 @@
         @csrf
         <input type="hidden" name="item_id" value="" id="item_id">
         <input type="hidden" name="user_id" value="" >
+        <input type="hidden" name="cart_id" value="{{$cart->first()->cart->id}}">
     </form>
   
     <form action="/sale/delete" method="post" class="form-js-delete-target">

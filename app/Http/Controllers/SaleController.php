@@ -20,8 +20,8 @@ class SaleController extends Controller
     {   
        $sale = new CreateSaleUseCase();
        $sale->handle($request->all());
-  
-        return redirect('/');
+        
+        return back();
     }
 
     

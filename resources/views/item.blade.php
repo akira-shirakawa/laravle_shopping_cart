@@ -30,7 +30,7 @@
             <input type="number" class="input" id="js-number1" name="price" required>
             <input type="hidden" name="user_id" value="{{auth::user()->id}}">
             <p>カテゴリー</p>
-            <select name="category_id">
+            <select name="category_id" class="select">
                 @foreach($categories as $value)
                 <option value="{{$value->id}}">{{$value->category}}</option>
                 @endforeach
