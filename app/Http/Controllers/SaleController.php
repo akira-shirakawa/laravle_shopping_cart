@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\UseCase\sale\CreateSaleUseCase;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class SaleController extends Controller
 {
     
@@ -35,10 +35,28 @@ class SaleController extends Controller
      */
     public function update(Request $request)
     {
+        DB::beginTransaction();
+        try{
+
         $sale = Sale::find($request->item_id);
+        
+
+        $cart = Sale::find($request->item_id)->cart;
+        $num = $sale->amount;
+        $price = $sale->price;
+        
+        $cart->sum = $cart->sum+$price*((int)$request->amount - $num);
+        $cart->count = $cart->count +((int)$request->amount - $num);
+        $cart->save();
+
         $sale->amount = $request->amount;
         $sale->save();
+        DB::commit();
         return back();
+        }catch(\Throwable $e){
+
+        }
+        
     }
 
     /**
@@ -49,8 +67,33 @@ class SaleController extends Controller
      */
     public function destroy(Request $request)
     {
+        DB::beginTransaction();
+        try{
         $sale = Sale::find($request->item_id);
+       
+        
+        $cart = Sale::find($request->item_id)->cart;
+        
+        $num = $sale->amount;
+        $price = $sale->price;
+
+        $cart->sum = $cart->sum - $num*$price;
+        $cart->count = $cart->count - $num;
+       
+        $cart->save();
+
         $sale->delete();
-        return redirect('/');
+        if($cart->carts->count() == 0){
+            
+            $cart->delete();
+            DB::commit();
+            return redirect('/cart');
+        }
+        DB::commit();
+        return back();
+        }catch(\Throwable $e){
+            dd($e);
+        }
+        
     }
 }

@@ -18,10 +18,11 @@ class CreateSaleUseCase
             $sale = Sale::where('item_id',$item_id)->where('user_id',Auth::user()->id)->where('cart_id',$request['cart_id'] ?? null)->get()[0];           
             $sale->amount = $sale->amount+1;
             $sale->save();
-            if($request['cart_id' ?? '']){
+            if($request['cart_id'] ?? ''){
                 $cart =Cart::find($request['cart_id']);
                 
                 $cart->sum = $cart->sum+Sale::where('user_id',Auth::id())->where('cart_id',$request['cart_id'])->where('item_id',$item_id)->get()->first()->price;
+                $cart->count = $cart->count+1;
                 $cart->save();
             }
             
