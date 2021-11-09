@@ -51,10 +51,10 @@
                                         <p>集計結果(from)</p>
                                     <input type="number" name="sum_from" class="input" value="{{session('sum_from')}}">
                                     <p>カテゴリー</p>
-                                    <select name="category_id" class="select">
+                                    <select name="category" class="select">
                                         <option value="" >指定なし</option>
                                         @foreach($category as $value)
-                                        <option value="{{$value->id}}">{{$value->category}}</option>
+                                        <option value="{{$value->category}}">{{$value->category}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -79,9 +79,10 @@
     @foreach($carts as $value)  
     <tr>
         <td>
-            @foreach($value->items as $item)
-            {{optional($item->category)->category}},
-            @endforeach
+        
+           @foreach($value->getCategory($value->id) as $category)
+            {{$category->category}},
+           @endforeach
             
         </td>
         <td>{{$value->comment}}</td>

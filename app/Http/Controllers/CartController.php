@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\UseCase\cart\CreateCartUseCase;
 use App\Cart;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Sale;
 use App\Item;
@@ -22,8 +23,11 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where('user_id',Auth::id())->get();
+        $cart = collect(Cart::where('user_id',Auth::id())->get());
+        
+
         $category = Category::all();
+       
         return view('cart',['carts'=>$cart,'category'=>$category]);
     }
 
@@ -80,22 +84,27 @@ class CartController extends Controller
     public function search(Request $request)
     {
         $value = $request->input('comment');
-        $this->category =$request->category_id;
         
-        $cart = Cart::where('comment','like',"%".$value."%")
-        ->where('user_id',Auth::id())
-        ->where('created_at','>',$request->created_at_from ?? '2000-01-01' )
-        ->where('created_at','<',$request->created_at_to ?? '2999-12-30')
-        ->where('updated_at','>',$request->updated_at_from ?? '2000-01-01')
-        ->where('updated_at','<',$request->updated_at_to ?? '2999-12-30')
-        ->where('count','>',$request->count_from ?? -1)
-        ->where('count','<',$request->count_to ?? 10000000)
-        ->where('sum','>',$request->sum_from ?? -1)
-        ->where('sum','<',$request->sum_to ?? 10000000)
-        ->whereHas('items',function($query){
-            $this->category ? $query->where('category_id',  $this->category ): $query->where('category_id','>',-1 );
-        })
-        ->get();
+        
+        $cart = Cart::select('carts.*')->
+        join('sales','carts.id','sales.cart_id')->
+        join('items','sales.item_id','items.id')->
+        join('categories','items.category_id','categories.id')->
+        where('comment','like',"%".$value."%")
+        ->where('carts.user_id',Auth::id())
+        ->where('carts.created_at','>',$request->created_at_from ?? '2000-01-01' )
+        ->where('carts.created_at','<',$request->created_at_to ?? '2999-12-30')
+        ->where('carts.updated_at','>',$request->updated_at_from ?? '2000-01-01')
+        ->where('carts.updated_at','<',$request->updated_at_to ?? '2999-12-30')
+        ->where('carts.count','>',$request->count_from ?? -1)
+        ->where('carts.count','<',$request->count_to ?? 10000000)
+        ->where('carts.sum','>',$request->sum_from ?? -1)
+        ->where('carts.sum','<',$request->sum_to ?? 10000000)
+        ->where('categories.category','like',"%".$request->category."%")       
+        ->get()
+        ->unique('id');
+       
+       
        \Session::flash('created_at_from',$request->created_at_from);
        \Session::flash('created_at_to',$request->created_at_to);
        \Session::flash('updated_at_from',$request->updated_at_from);
