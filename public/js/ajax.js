@@ -87,3 +87,8 @@ write();
             console.log('失敗');
           });
       });
+      $('#logout').click(function(event){
+        console.log('hogehoge');
+        event.preventDefault();
+        $("#logout-form").submit();
+    })
