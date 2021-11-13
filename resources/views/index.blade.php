@@ -44,11 +44,14 @@
   <button class="modal-close is-large" aria-label="close"></button>
 </div>
 @section('navbar')
-<a class="navbar-item" href="/item">
+    <a class="navbar-item" href="/item">
        item新規登録
     </a>
     <a class="navbar-item" href="/cart">
     <i class="fas fa-shopping-cart"></i>
+    </a>
+    <a class="navbar-item" href="/ajax">
+   ajax通信確認
     </a>
 @endsection
 @section('content')

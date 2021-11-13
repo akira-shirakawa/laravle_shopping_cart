@@ -17,7 +17,6 @@ class ExampleTest extends TestCase
     public function testBasicTest()
     {
         $response = $this->get('/');
-
         $response->assertStatus(302);
         User::create(['name'=>'test','email'=>'test1@example.com','password'=>bcrypt(32310901)]);
         $testUser = User::query()->first();

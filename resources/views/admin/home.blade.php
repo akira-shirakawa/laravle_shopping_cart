@@ -10,8 +10,9 @@
 <h2>カテゴリー登録</h2>
 <form action="./category" method="post">
 @csrf
-<input type="text" class="input" name="category" required>
-<input type="submit" value="送信" class="button">
+<p id="js-ajax-alert"></p>
+<input type="text" class="input" name="category" id="js-ajax-target" required>
+<input type="submit" value="送信" class="button js-ajax-hide">
 </form>
 <table class="table">
 <tr><th>カテゴリー</th><th>作成日</th><th>使用アイテム個数</th></tr>

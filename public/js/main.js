@@ -59,3 +59,26 @@ $('#logout').click(function(event){
     event.preventDefault();
     $("#logout-form").submit();
 })
+$('#js-ajax-target').on('keyup',function(){
+    let url = "/ajax/"+$(this).val();
+    
+    $.ajax({
+        type: "get", //HTTP通信の種類
+        url: url,
+        dataType: "json",
+      })
+        //通信が成功したとき
+        .done((res) => { // resの部分にコントローラーから返ってきた値 $users が入る
+          if(res.length == 1){
+              $('.js-ajax-hide').addClass('is-hidden');
+              $('#js-ajax-alert').text('すでにこのカテゴリーは使われています');
+          }else{
+            $('.js-ajax-hide').removeClass('is-hidden');
+            $('#js-ajax-alert').text('OK');
+          }
+        })
+        //通信が失敗したとき
+        .fail((error) => {
+          console.log(error.statusText);
+        });
+})

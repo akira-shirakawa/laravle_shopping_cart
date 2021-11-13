@@ -26,7 +26,11 @@ route::get('/cart/{id}','CartController@edit');
 route::post('/cart/update','CartController@update');
 route::post('/sale/update','SaleController@update');
 route::get('/search','CartController@search');
-
+route::get('/ajax','AjaxController@index')->middleware('auth');
+route::post('/ajax','AjaxController@store')->middleware('auth');
+route::get('/getdata','AjaxController@getData')->middleware('auth');
+route::post('/ajax/delete','AjaxController@destroy')->middleware('auth');
+route::get('/ajax/{id}','AjaxController@isUnique');
 Route::group(['prefix' => 'admin'], function() {
     
     Route::get('login',     'Admin\LoginController@showLoginForm')->name('admin.login');
