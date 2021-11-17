@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Sale;
 use App\Item;
 use App\Category;
-use App\UseCase\cart\SearchCartUsecase;
+use App\UseCase\cart\SearchCartUseCase;
 use Auth;
 
 
