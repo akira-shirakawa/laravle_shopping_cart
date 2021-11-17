@@ -45,4 +45,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
     Route::get('category/{id}','CategoryController@edit');
     Route::post('category/update','CategoryController@update');
     Route::get('/user','Admin\HomeController@user');
+    Route::get('/searchUserOnInput','Admin\HomeController@searchUserOnInput');
+    route::get('/searchUser','Admin\HomeController@searchUser');
 });

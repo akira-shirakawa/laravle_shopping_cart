@@ -33,4 +33,16 @@ class HomeController extends Controller
         $user = User::all();
         return view('admin.user',['users'=>$user]);
     }
+    public function searchUserOnInput(Request $request)
+    {
+        
+        $user = User::where('name','like',"%".$request->user."%")->count();
+       
+        return $user;
+    }
+    public function searchUser(Request $request)
+    {
+        $user = User::where('name','like',"%$request->user%")->get();
+        return $user;
+    }
 }

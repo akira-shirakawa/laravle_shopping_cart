@@ -1,0 +1,15 @@
+.search_box{
+    position:relative;
+    
+}
+.search_box input{
+    position:absolute;
+    left:0;
+    top:0; 
+}
+.search_box button{
+    position:absolute;
+    top:0;
+    right:0;
+    border-left:none;
+}

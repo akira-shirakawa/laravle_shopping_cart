@@ -84,7 +84,7 @@ class CartController extends Controller
 
     public function search(Request $request)
     {
-        $useCase = new SearchCartUsecase();
+        $useCase = new SearchCartUseCase();
         $cart = $useCase->handle($request->all());
         
         return view('cart',['carts'=>$cart,'category'=>Category::all()]);
