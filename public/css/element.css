@@ -1,5 +1,6 @@
 .search_box{
     position:relative;
+    height:100px;
     
 }
 .search_box input{
